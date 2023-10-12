@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>User Login</title>
+</head>
+<body>
+    <img src="../static/login_bg.jpg" class="img-fluid">
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <p class="logo" style="font-size: xx-large; color: white; padding-left: 15px; background-color: black; text-align: center;">𝒱𝒾𝓂𝒶𝓁𝒵𝑜𝓃</p>
+        <br><br><br>
+        <h1 class="text-center text-white fw-bold fs-3">Login</h1>
+        <form method="POST" class="bg-light border border-3 border-dark-subtle rounded-4 shadow-lg px-5 py-4 bg-opacity-75">
+            <div id="u_type">
+                <p class="fw-bold">User Type:<p>
+                <input type="radio" id="user" name="usertype" value="user"/>
+                <label for="user">User</label>
+        
+                <input type="radio" id="admin" name="usertype" value="admin">
+                <label for="admin">Admin</label>
+                <br>
+            </div >
+
+            <div class="input-group-sm mb-3">
+                <label for="username" class="fw-bold">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder=" username">
+            </div>
+
+            <div class="input-group-sm mb-3">
+                <label for="pass" class="fw-bold">Password</label>
+                <input type="password" id="pass" name="password" class="form-control" placeholder=" password">
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark">Login</button>
+            <br><br>
+
+            <a href="/new_registration" class="text-decoration-none">New user? Create account</a>
+            <br>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        h3{
+            text-align: center;
+            position: sticky;
+        }
+        .cartCost{
+            background-color: beige;
+            height: fit-content;
+            font-size: x-large;
+            padding-left: 15px;
+            padding-right: 15px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light mx-3 border-bottom ">
+        <span class="navbar-brand fs-3"><b>The Grocery Store...</b></span>
+        
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a type="button" class="nav-item nav-link fs-4 btn btn-outline-primary" href="/user/{{u_id}}">Home</a>
+                <a type="button" class="nav-item nav-link fs-4 btn btn-outline-primary" href="/user/{{u_id}}/profile">Profile</a>
+                <a type="button" class="nav-item nav-link fs-4 btn btn-primary bg-primary" href=""><i class="bi bi-cart"></i> Cart</a>
+                <a type="button" class="nav-item nav-link fs-4 btn btn-outline-danger px-4" onclick="return confirm('Are you sure you want to Logout?')" href="/"><i class="bi bi-box-arrow-right"></i></a>
+            </div>
+        </div>
+    </nav>
+    <div class="cartCost border-bottom">
+        <p><b>Total Cart Cost: </b>Rs.{{total_price}}</p>&nbsp;
+        <a type="button" href="/user/{{u_id}}/place_order" onclick="return confirm('Are you sure you want to place the order? ')" class="btn btn-info">Place Order</a>
+    </div>
+    <h3 style="text-decoration: underline;">Cart</h3>
+    {% if orders %}
+        {% for o in orders %}
+        <div class="card mx-1 my-3" style="width: 18rem; display: inline-block; background-color: lightcyan;">
+            <div class="card-body" style="display: flex; flex-direction: column;">
+                <p class="card-img-top px-5"><img src="/static/{{o.product_id}}.jpeg" width="150px" height="150px" class="flex-shrink-0 me-3" alt="Image"></p>
+                <h5 class="card-title" style="text-align: center;">{{product_details[o.product_id].product_name}}</h5>
+                <p class="card-text"><b>Price:</b> Rs. {{product_details[o.product_id].rate_per_unit}} per {{product_details[o.product_id].unit}}<br>
+                <b>Quantity Ordered:</b> {{o.quantity_ordered}} <br>
+                <b>Manufacture Date:</b> {{product_details[o.product_id].mfg_date}}<br>
+                <b>Total Price:</b> Rs. {{o.total_price}}
+                </p>
+                <a type="button" href="/user/{{u_id}}/{{o.order_id}}/deleteFromCart" onclick="return confirm('Do you want to delete this product from cart?')" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+        
+    {% else %}
+        <p class="fs-5" style="text-align: center;">No Orders in the Cart!!!</p>
+    {% endif %}
+    <hr>
+    {% if prev_orders %}
+        <h3 style="text-align: center; text-decoration: underline;">Previous orders</h3>
+        {% for prev in prev_orders %}
+        <div class="card mx-1 my-3" style="width: 18rem; display: inline-block;">
+            <div class="card-body" style="display: flex; flex-direction: column;">
+                <p class="card-img-top px-5"><img src="/static/{{prev.product_id}}.jpeg" width="150px" height="150px" class="flex-shrink-0 me-3" alt="Image"></p>
+                <h5 class="card-title" style="text-align: center;">{{prev_orders_details[prev.product_id].product_name}}</h5>
+                <p class="card-text"><b>Price:</b> Rs. {{prev_orders_details[prev.product_id].rate_per_unit}} per {{prev_orders_details[prev.product_id].unit}}<br>
+                <b>Quantity Ordered:</b> {{prev.quantity_ordered}} <br>
+                <b>Manufacture Date:</b> {{prev_orders_details[prev.product_id].mfg_date}}<br>
+                <b>Total Price:</b> Rs. {{prev.total_price}}<br>
+                <b>Order Date: </b> {{prev.order_date}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

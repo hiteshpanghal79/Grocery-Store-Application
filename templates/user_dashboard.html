@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        .searchBox{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light mx-3">
+        <span class="navbar-brand fs-3"><b>The Grocery Store...</b></span>
+        
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a type="button" class="nav-item nav-link fs-4 btn btn-outline-primary bg-primary" href="">Home</a>
+                <a type="button" class="nav-item nav-link fs-4 btn btn-outline-primary" href="/user/{{user_id}}/profile">Profile</a>
+                <a type="button" class="nav-item nav-link fs-4 btn btn-outline-primary" href="/user/{{user_id}}/cart"><i class="bi bi-cart"></i> Cart</a>
+                <a type="button" onclick="return confirm('Are you sure you want to Logout?')" class="nav-item nav-link fs-4 btn btn-outline-danger px-4" href="/"><i class="bi bi-box-arrow-right"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="searchBox">
+        <form action="/user/{{user_id}}/search" class="d-inline p-5 m-5 border border-3 border-black" style="background-color:azure;" method="POST">
+            <label for="search"><b>Search: </b></label>
+            <input type="text" id="search" name="search" placeholder="search for...">
+    
+            <button type="submit">Search</a>
+        </form>
+    </div>
+
+    <h3 class="text-center">Recently Added Products</h3>
+    {% for p in products %}
+        <div class="card mx-1" style="width: 18rem; display: inline-block;">
+            <div class="card-body" style="display: flex; flex-direction: column;">
+                <p class="card-img-top px-5"><img src="/static/{{p.product_id}}.jpeg" width="150px" height="150px" class="flex-shrink-0 me-3" alt="Image"></p>
+                </span>
+                <h5 class="card-title">{{p.product_name}}</h5>
+                <p class="card-text"><b>Price:</b> {{p.rate_per_unit}} per {{p.unit}}<br><b>Manufacture Date:</b> {{p.mfg_date}}</p>
+                {% if p.total_quantity==0 %}
+                    <p class="card-text text-danger"> Out of Stock </p>
+                {% else %}
+                <a type="button" href="/user/{{user_id}}/{{p.product_id}}/buy" class="card-link btn btn-info px-5 fw-bold">Buy Now</a><br>
+                <a type="button" href="/user/{{user_id}}/{{p.product_id}}/add_to_cart" class="card-link btn btn-success px-5 fw-bold">Add to Cart</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    
+
+</body>
+</html>
